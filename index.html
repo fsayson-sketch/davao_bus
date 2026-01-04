@@ -121,9 +121,12 @@
         document.getElementById('nearest-info').innerText = "Finding nearest station...";
         document.getElementById('loader').style.display = "block";
 
+        // --- THE FIX IS HERE ---
         if (currentPathLine) map.removeLayer(currentPathLine);
-        currentRouteMarkers.forEach(m => map.removeLayer(m));
+        if (nearestMarker) map.removeLayer(nearestMarker); // Clear the yellow glow from the previous route
+        currentRouteMarkers.forEach(m => map.removeLayer(m.marker));
         currentRouteMarkers = [];
+        // -----------------------
 
         const lineCoords = stationsInPath.map(s => s.coords);
         currentPathLine = L.polyline(lineCoords, {color: '#007bff', weight: 6}).addTo(map);
@@ -134,6 +137,8 @@
                 radius: (index === 0 || index === stationsInPath.length-1) ? 8 : 5,
                 color: color, fillColor: 'white', fillOpacity: 1
             }).addTo(map).bindTooltip(station.name);
+            
+            // Store the marker object so we can clear it later
             currentRouteMarkers.push({ marker: m, name: station.name, coords: station.coords });
         });
 
