@@ -16,9 +16,9 @@ class MapManager {
         this.markers = [];
     }
 
-    drawRoute(coords, pathNames) {
+    drawRoute(coords, pathNames, routeColor) {
         this.clearOldLayers();
-        this.currentPath = L.polyline(coords, { color: '#007bff', weight: 6 }).addTo(this.map);
+        this.currentPath = L.polyline(coords, { color: routeColor || '#007bff', weight: 6 }).addTo(this.map);
         
         pathNames.forEach((name, index) => {
             let color = (index === 0) ? '#28a745' : (index === pathNames.length - 1) ? '#dc3545' : '#007bff';

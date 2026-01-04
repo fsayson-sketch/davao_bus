@@ -1,87 +1,42 @@
 {
   "stations": {
-    "Toril District Hall": [7.0185, 125.5005],
-    "Fusion GTH": [7.0188, 125.4985],
-    "Pepsi Dumoy": [7.0300, 125.5100],
-    "Bago Aplaya Crossing": [7.0450, 125.5333],
-    "Gulf View": [7.0470, 125.5380],
-    "Jollibee Puan": [7.0500, 125.5400],
-    "Coke Ulas": [7.0700, 125.5500],
-    "Ateneo Senior High": [7.0600, 125.5600],
-    "SPED Bangkal": [7.0620, 125.5650],
-    "Tahimik Ave. Matina": [7.0587, 125.5690],
-    "Matina Crossing": [7.0587, 125.5690],
-    "Kawayan Drive": [7.0500, 125.5800],
-    "DGT": [7.0600, 125.5800],
-    "Water Dist. Matina": [7.0650, 125.5850],
-    "NCCC Maa": [7.0600, 125.5900],
-    "Ateneo Matina": [7.0600, 125.6000],
-    "GE Torres (Sandawa)": [7.0584, 125.6013],
-    "Ecoland Terminal": [7.0540, 125.6000],
-    "UM Matina": [7.0630, 125.5950],
-    "Alorica Davao": [7.0650, 125.5960],
-    "Shrine Hills Matina": [7.0680, 125.5850],
-    "Shell Bangkal": [7.0610, 125.5640],
-    "Mercury Puan": [7.0490, 125.5410],
-    "Apo Golf": [7.0420, 125.5200],
-    "Yellow Fin Quimpo": [7.0550, 125.6100],
-    "Coastal Rd. Times Beach": [7.0400, 125.5900],
-    "Shell Bago Aplaya": [7.0400, 125.5300],
-    "IWHA": [7.0400, 125.5100],
-    "GTH": [7.0931, 125.5022],
-    "Felcris Centrale": [7.0620, 125.6120],
-    "Davao City Police Office": [7.0720, 125.6100],
-    "CM Recto Ave. (LBC)": [7.0730, 125.6120],
-    "Red Cross Roxas": [7.0750, 125.6130],
-    "Artiaga Boulevard": [7.0780, 125.6180],
-    "Davao Light (C. Bangoy St.)": [7.0740, 125.6150],
-    "UM Bolton": [7.0700, 125.6110]
+    "Toril District Hall Station": [7.018598, 125.497186],
+    "Fusion GTH Station": [7.025727, 125.504558],
+    "Pepsi Dumoy Station": [7.031084, 125.512510],
+    "Bago Aplaya Crossing Station": [7.042767, 125.529653],
+    "Gulf View Station": [7.046206, 125.534704],
+    "Jollibee Puan Station": [7.051554, 125.542387],
+    "Coke Ulas Station": [7.053489, 125.544398],
+    "Ateneo Senior High Station": [7.060701, 125.556798],
+    "SPED Bangkal Station": [7.061255, 125.559564],
+    "Tahimik Avenue Matina Station": [7.060841, 125.563677],
+    "Matina Crossing Station": [7.058172, 125.569759],
+    "Kawayan Drive Station": [7.055764, 125.575410],
+    "DGT Station": [7.058288, 125.580316],
+    "Water District Matina Station": [7.060973, 125.590054],
+    "NCCC Maa Station": [7.061929, 125.593913],
+    "Ateneo Matina Station": [7.062851, 125.597738],
+    "GE Torres Station": [7.061449, 125.601184],
+    "Yellow Fin Quimpo Station": [7.055499, 125.599645],
+    "Coastal Road Times Beach Station": [7.045225, 125.591505],
+    "Shell Bago Aplaya Station": [7.042361, 125.528801],
+    "IWHA Station": [7.031802, 125.513288],
+    "GTH Station": [7.025851, 125.504518]
   },
   "all_routes": [
     {
       "id": "R102-AM",
-      "name": "Toril - Sandawa (AM)",
-      "am": "6:00 AM - 10:00 AM",
+      "name": "Toril to GE Torres",
+      "am": "06:00 - 10:00",
       "pm": "--",
+      "color": "#430dac",
       "path": [
-        "Toril District Hall", "Fusion GTH", "Pepsi Dumoy", "Bago Aplaya Crossing", 
-        "Gulf View", "Jollibee Puan", "Coke Ulas", "Ateneo Senior High", 
-        "SPED Bangkal", "Tahimik Ave. Matina", "Matina Crossing", "Kawayan Drive", 
-        "DGT", "Water Dist. Matina", "NCCC Maa", "Ateneo Matina", "GE Torres (Sandawa)"
-      ]
-    },
-    {
-      "id": "R102-PM",
-      "name": "Ecoland - Toril (PM)",
-      "am": "--",
-      "pm": "4:00 PM - 9:00 PM",
-      "path": [
-        "Ecoland Terminal", "GE Torres (Sandawa)", "UM Matina", "Alorica Davao", 
-        "Shrine Hills Matina", "Kawayan Drive", "Matina Crossing", "Tahimik Ave. Matina", 
-        "SPED Bangkal", "Shell Bangkal", "Coke Ulas", "Mercury Puan", "Apo Golf", 
-        "Shell Bago Aplaya", "IWHA", "GTH", "Toril District Hall"
-      ]
-    },
-    {
-      "id": "R103-AM",
-      "name": "Toril - Roxas (AM)",
-      "am": "6:00 AM - 10:00 AM",
-      "pm": "--",
-      "path": [
-        "Toril District Hall", "Fusion GTH", "Pepsi Dumoy", "Bago Aplaya Crossing", 
-        "Coastal Rd. Times Beach", "Ecoland Terminal", "Felcris Centrale", 
-        "Davao City Police Office", "CM Recto Ave. (LBC)", "Red Cross Roxas"
-      ]
-    },
-    {
-      "id": "R103-PM",
-      "name": "Roxas - Toril (PM)",
-      "am": "--",
-      "pm": "4:00 PM - 9:00 PM",
-      "path": [
-        "Davao Light (C. Bangoy St.)", "UM Bolton", "Felcris Centrale", 
-        "Yellow Fin Quimpo", "Coastal Rd. Times Beach", "Shell Bago Aplaya", 
-        "IWHA", "GTH", "Toril District Hall"
+        "Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station", 
+        "Bago Aplaya Crossing Station", "Gulf View Station", "Jollibee Puan Station", 
+        "Coke Ulas Station", "Ateneo Senior High Station", "SPED Bangkal Station", 
+        "Tahimik Avenue Matina Station", "Matina Crossing Station", "Kawayan Drive Station", 
+        "DGT Station", "Water District Matina Station", "NCCC Maa Station", 
+        "Ateneo Matina Station", "GE Torres Station"
       ]
     }
   ]
