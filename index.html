@@ -11,14 +11,19 @@
     <div id="map"></div>
 
     <div class="ui-container">
-        <div class="status-card">
-            <div id="loader" class="spinner"></div>
-            <div id="bus-id"><b>Tracker:</b> Ready</div>
-            <div id="nearest-info">Select a route to begin</div>
-        </div>
-        <div id="route-list">
-            </div>
+    <div class="status-card">
+        <div id="loader" class="spinner"></div>
+        <div id="bus-id"><b>Tracker:</b> Ready</div>
+        <div id="nearest-info">Select a route to begin</div>
     </div>
+    
+    <div id="route-list"></div>
+
+    <div class="privacy-note">
+        🛡️ <b>Privacy Note:</b> Your location is processed locally to find the nearest station. 
+        No data is saved or transmitted to any server.
+    </div>
+</div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/MapManager.js"></script>
