@@ -1,0 +1,50 @@
+{
+  "stations": {
+    "Toril District Hall": [7.0185, 125.5005],
+    "Fusion GTH": [7.0188, 125.4985],
+    "Pepsi Dumoy": [7.0300, 125.5100],
+    "Bago Aplaya Crossing": [7.0450, 125.5333],
+    "Gulf View": [7.0470, 125.5380],
+    "Jollibee Puan": [7.0500, 125.5400],
+    "Coke Ulas": [7.0700, 125.5500],
+    "Ateneo Senior High": [7.0600, 125.5600],
+    "SPED Bangkal": [7.0620, 125.5650],
+    "Tahimik Ave. Matina": [7.0587, 125.5690],
+    "Matina Crossing": [7.0587, 125.5690],
+    "Kawayan Drive": [7.0500, 125.5800],
+    "DGT": [7.0600, 125.5800],
+    "Water Dist. Matina": [7.0650, 125.5850],
+    "NCCC Maa": [7.0600, 125.5900],
+    "Ateneo Matina": [7.0600, 125.6000],
+    "GE Torres (Sandawa)": [7.0584, 125.6013],
+    "Yellow Fin Quimpo": [7.0550, 125.6100],
+    "Coastal Rd. Times Beach": [7.0400, 125.5900],
+    "Shell Bago Aplaya": [7.0400, 125.5300],
+    "IWHA": [7.0400, 125.5100],
+    "GTH": [7.0931, 125.5022]
+  },
+  "all_routes": [
+    {
+      "id": "R102-AM",
+      "name": "Toril to GE Torres (AM)",
+      "am": "6:00 AM - 10:00 AM",
+      "pm": "--",
+      "path": [
+        "Toril District Hall", "Fusion GTH", "Pepsi Dumoy", "Bago Aplaya Crossing", 
+        "Gulf View", "Jollibee Puan", "Coke Ulas", "Ateneo Senior High", 
+        "SPED Bangkal", "Tahimik Ave. Matina", "Matina Crossing", "Kawayan Drive", 
+        "DGT", "Water Dist. Matina", "NCCC Maa", "Ateneo Matina", "GE Torres (Sandawa)"
+      ]
+    },
+    {
+      "id": "R102-PM",
+      "name": "GE Torres to Toril (Return)",
+      "am": "--",
+      "pm": "4:00 PM - 9:00 PM",
+      "path": [
+        "GE Torres (Sandawa)", "Yellow Fin Quimpo", "Coastal Rd. Times Beach", 
+        "Shell Bago Aplaya", "IWHA", "GTH", "Toril District Hall"
+      ]
+    }
+  ]
+}
