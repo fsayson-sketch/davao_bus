@@ -216,22 +216,6 @@
       "pm": "16:00 - 21:00",
       "color": "#d98346",
       "path": ["Red Cross Roxas Station", "Davao Mental Hospital Station", "NCCC Mall VP Station", "Abreeza Mall Station", "JP Laurel Flyover Station", "Ladislawa Station", "Milan Buhangin Station", "Merco Cabaguio Station", "Carmelite Lanang Station", "SM Lanang Station", "Philippine Nikkei Jin Kai Station", "Angliongto Arcade Station", "Punad Bypass Station", "McDonald's Pagibig Station", "Sta. Lucia Mall Station", "LPU Davao Station", "Panacan Bypass Road Station", "Panacan Depot Station", "Davao-Samal Ferry Terminal Station"]
-    },
-    {
-      "id": "R793-AM",
-      "name": "Panacan via R Castillo to Roxas (AM)",
-      "am": "06:00 - 10:00",
-      "pm": "--",
-      "color": "#6270a6",
-      "path": ["Red Cross Roxas Station", "Davao Mental Hospital Station", "Sta. Ana Sobrecarey Station", "Agdao Flyover Station", "Assumption College Station", "Shell SPMC Station", "Tebow Hospital Lanang Station", "SM Lanang Station", "Starbucks Damosa Station", "Angliongto Arcade Station", "Laverna Station", "Jose Maria College Station", "Landmark Station", "Panacan Avenue Station", "Davao-Samal Ferry Terminal Station"]
-    },
-    {
-      "id": "R793-PM",
-      "name": "Panacan via R Castillo to Roxas (PM)",
-      "am": "--",
-      "pm": "16:00 - 21:00",
-      "color": "#6270a6",
-      "path": ["Red Cross Roxas Station", "Davao Mental Hospital Station", "Sta. Ana Sobrecarey Station", "Agdao Flyover Station", "Assumption College Station", "Shell SPMC Station", "Tebow Hospital Lanang Station", "SM Lanang Station", "Starbucks Damosa Station", "Angliongto Arcade Station", "Punad Bypass Station", "Laverna Station", "Jose Maria College Station", "Landmark Station", "Panacan Avenue Station", "NCCC Panacan Station", "Red Cross Roxas Station"]
     }
   ]
 }
