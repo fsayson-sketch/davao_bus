@@ -74,21 +74,23 @@
 
     // 2. Build UI from JSON
     async function loadRoutes() {
-        try {
-            const response = await fetch('routes.json');
-            const data = await response.json();
-            window.busData = data;
-            
-            const listContainer = document.getElementById('route-list');
-            listContainer.innerHTML = ''; 
+    try {
+        const response = await fetch('routes.json');
+        const data = await response.json();
+        window.busData = data;
+        
+        const listContainer = document.getElementById('route-list');
+        listContainer.innerHTML = ''; 
 
-            // Logic to group R102 variants together and R103 together
-            const routeGroups = ["R102", "R103"];
-            
-            routeGroups.forEach(groupName => {
-                const am = data.all_routes.find(r => r.id === groupName + "-AM");
-                const pm = data.all_routes.find(r => r.id === groupName + "-PM");
+        // We get unique route prefixes (e.g., "R102", "R103") directly from your data
+        const uniqueGroups = [...new Set(data.all_routes.map(r => r.id.split('-')[0]))];
+        
+        uniqueGroups.forEach(groupName => {
+            const am = data.all_routes.find(r => r.id === groupName + "-AM");
+            const pm = data.all_routes.find(r => r.id === groupName + "-PM");
 
+            // Only create the group if at least one trip (AM or PM) exists
+            if (am || pm) {
                 listContainer.innerHTML += `
                     <div class="route-group-box">
                         <div class="main-route-header" onclick="toggleSubCards('${groupName}')">
@@ -98,26 +100,29 @@
                             </svg>
                         </div>
                         <div class="sub-cards-container" id="container-${groupName}">
-                            <div class="route-card" onclick="selectRoute('${am.id}')">
-                                <div><span class="route-id">${am.id}</span> <span class="route-name">${am.name}</span></div>
-                                <div class="schedule-box">
-                                    <div class="time-badge">☀️ ${am.am}</div>
-                                    <div class="time-badge">🌙 --</div>
-                                </div>
-                            </div>
-                            <div class="route-card" onclick="selectRoute('${pm.id}')">
-                                <div><span class="route-id">${pm.id}</span> <span class="route-name">${pm.name}</span></div>
-                                <div class="schedule-box">
-                                    <div class="time-badge">☀️ --</div>
-                                    <div class="time-badge">🌙 ${pm.pm}</div>
-                                </div>
-                            </div>
+                            ${am ? renderCard(am, '☀️') : ''}
+                            ${pm ? renderCard(pm, '🌙') : ''}
                         </div>
                     </div>
                 `;
-            });
-        } catch (error) { console.error("Error loading JSON:", error); }
+            }
+        });
+    } catch (error) { 
+        console.error("Error loading JSON:", error); 
     }
+}
+
+// Helper function to keep the code clean
+function renderCard(route, icon) {
+    return `
+        <div class="route-card" onclick="selectRoute('${route.id}')">
+            <div><span class="route-id">${route.id}</span> <span class="route-name">${route.name}</span></div>
+            <div class="schedule-box">
+                <div class="time-badge">${icon} ${icon === '☀️' ? route.am : route.pm}</div>
+            </div>
+        </div>
+    `;
+}
 
     // 3. Toggle Logic for Modern Chevron Icon
     function toggleSubCards(groupId) {
