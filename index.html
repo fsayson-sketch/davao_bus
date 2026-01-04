@@ -93,7 +93,7 @@
     const coords = route.path.map(name => routeManager.stations[name]);
     
     // Pass route.color so the MapManager knows what color to paint the line
-    mapManager.drawRoute(coords, route.path, route.color); 
+    mapManager.drawRoute(coords, route.path, route.color);
     
     document.getElementById('loader').style.display = "block";
     document.getElementById('bus-id').innerHTML = `<b>Selected:</b> ${route.id}`;

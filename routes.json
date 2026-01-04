@@ -6,7 +6,7 @@
     "Bago Aplaya Crossing Station": [7.042767, 125.529653],
     "Gulf View Station": [7.046206, 125.534704],
     "Jollibee Puan Station": [7.051554, 125.542387],
-    "Coke Ulas Station": [7.053489, 125.544398],
+    "Coke Ulas Station": [7.053568, 125.544283],
     "Ateneo Senior High Station": [7.060701, 125.556798],
     "SPED Bangkal Station": [7.061255, 125.559564],
     "Tahimik Avenue Matina Station": [7.060841, 125.563677],
@@ -17,16 +17,20 @@
     "NCCC Maa Station": [7.061929, 125.593913],
     "Ateneo Matina Station": [7.062851, 125.597738],
     "GE Torres Station": [7.061449, 125.601184],
-    "Yellow Fin Quimpo Station": [7.055499, 125.599645],
-    "Coastal Road Times Beach Station": [7.045225, 125.591505],
+    "Ecoland Terminal Station": [7.056300, 125.601555],
+    "UM Matina Station": [7.063223, 125.598647],
+    "Alorica Davao Station": [7.061576, 125.591562],
+    "Shrine Hills Matina Station": [7.057786, 125.579373],
+    "Mercury Puan Station": [7.052315, 125.542941],
+    "Apo Golf Station": [7.045904, 125.534033],
     "Shell Bago Aplaya Station": [7.042361, 125.528801],
-    "IWHA Station": [7.031802, 125.513288],
-    "GTH Station": [7.025851, 125.504518]
+    "IWHA Station": [7.031802, 125.513287],
+    "GTH Station": [7.025851, 125.504517]
   },
   "all_routes": [
     {
       "id": "R102-AM",
-      "name": "Toril to GE Torres",
+      "name": "Toril to GE Torres (AM)",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#430dac",
@@ -37,6 +41,21 @@
         "Tahimik Avenue Matina Station", "Matina Crossing Station", "Kawayan Drive Station", 
         "DGT Station", "Water District Matina Station", "NCCC Maa Station", 
         "Ateneo Matina Station", "GE Torres Station"
+      ]
+    },
+    {
+      "id": "R102-PM",
+      "name": "GE Torres to Toril (PM)",
+      "am": "--",
+      "pm": "16:00 - 21:00",
+      "color": "#430dac",
+      "path": [
+        "Ecoland Terminal Station", "GE Torres Station", "UM Matina Station", 
+        "Alorica Davao Station", "Shrine Hills Matina Station", "Kawayan Drive Station", 
+        "Matina Crossing Station", "Tahimik Avenue Matina Station", "SPED Bangkal Station", 
+        "Shell Bangkal Station", "Coke Ulas Station", "Mercury Puan Station", 
+        "Apo Golf Station", "Shell Bago Aplaya Station", "IWHA Station", 
+        "GTH Station", "Toril District Hall Station"
       ]
     }
   ]

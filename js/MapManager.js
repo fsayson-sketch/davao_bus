@@ -17,20 +17,20 @@ class MapManager {
     }
 
     drawRoute(coords, pathNames, routeColor) {
-        this.clearOldLayers();
-        this.currentPath = L.polyline(coords, { color: routeColor || '#007bff', weight: 6 }).addTo(this.map);
-        
-        pathNames.forEach((name, index) => {
-            let color = (index === 0) ? '#28a745' : (index === pathNames.length - 1) ? '#dc3545' : '#007bff';
-            const m = L.circleMarker(coords[index], {
-                radius: (index === 0 || index === pathNames.length - 1) ? 8 : 5,
-                color: color, fillColor: 'white', fillOpacity: 1
-            }).addTo(this.map).bindTooltip(name);
-            this.markers.push(m);
-        });
-        
-        this.map.fitBounds(this.currentPath.getBounds(), { padding: [40, 40] });
-    }
+    this.clearOldLayers(); // Important: Clears previous route lines and markers
+    this.currentPath = L.polyline(coords, { color: routeColor || '#007bff', weight: 6 }).addTo(this.map);
+    
+    pathNames.forEach((name, index) => {
+        let color = (index === 0) ? '#28a745' : (index === pathNames.length - 1) ? '#dc3545' : '#007bff';
+        const m = L.circleMarker(coords[index], {
+            radius: (index === 0 || index === pathNames.length - 1) ? 8 : 5,
+            color: color, fillColor: 'white', fillOpacity: 1
+        }).addTo(this.map).bindTooltip(name);
+        this.markers.push(m);
+    });
+    
+    this.map.fitBounds(this.currentPath.getBounds(), { padding: [40, 40] });
+}
 
     updateUserLocation(lat, lng, nearest) {
         if (this.userMarker) this.map.removeLayer(this.userMarker);
