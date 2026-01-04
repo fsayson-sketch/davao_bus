@@ -49,7 +49,7 @@
             const list = document.getElementById('route-list');
             const groups = [...new Set(routes.map(r => r.id.split('-')[0]))];
             
-            list.innerHTML = ""; // Clear existing list
+            list.innerHTML = ""; 
             groups.forEach(groupId => {
                 const am = routeManager.getRouteById(`${groupId}-AM`);
                 const pm = routeManager.getRouteById(`${groupId}-PM`);
@@ -86,10 +86,14 @@
                 </div>`;
         }
 
-            const coords = route.path
-            .map(name => routeManager.stations[name])
-            .filter(c => c !== undefined); // This is the shield that prevents the crash
+        // Restored missing function declaration here
+        function handleSelect(routeId) {
+            const route = routeManager.getRouteById(routeId);
             
+            // This is the shield that prevents the "reading 'lat'" crash
+            const coords = route.path
+                .map(name => routeManager.stations[name])
+                .filter(c => c !== undefined); 
 
             if (coords.length === 0) {
                 document.getElementById('nearest-info').innerText = "Error: Invalid route station names.";
