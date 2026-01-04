@@ -40,18 +40,18 @@
     "Vista Mall Station": [7.085745, 125.508393],
     "San Pedro Street Station": [7.065678, 125.607742],
     "Grand Menseng Hotel Station": [7.064504, 125.606851],
-    "Pichon Street corner Quirino Avenue Station": [7.06786, 125.603117],
+    "Pichon Street corner Quirino Avenue Station": [7.067860, 125.603117],
     "Hope Avenue Bangkal Station": [7.060941, 125.553895],
     "Davao Mental Hospital Station": [7.076155, 125.613312],
     "NCCC Mall VP Station": [7.085864, 125.611279],
     "Abreeza Mall Station": [7.090343, 125.610023],
     "JP Laurel Flyover Station": [7.094941, 125.615066],
     "Ladislawa Station": [7.098881, 125.614882],
-    "Citygate Buhangin Station": [7.111835, 125.61309],
+    "Citygate Buhangin Station": [7.111835, 125.613090],
     "Holy Child Cabantian Station": [7.119249, 125.620921],
     "Jollibee Cabantian Station": [7.127579, 125.619971],
     "Citymall Northtown Station": [7.14208, 125.599924],
-    "Sta. Lucia Mall Station": [7.13281, 125.642798],
+    "Sta. Lucia Mall Station": [7.132810, 125.642798],
     "McDonald's Pagibig Station": [7.125932, 125.633923],
     "NHA Buhangin Station": [7.114836, 125.623378],
     "Buhangin Gym Station": [7.109592, 125.615779],
@@ -62,7 +62,7 @@
     "Panacan Avenue Station": [7.143286, 125.654132],
     "Davao-Samal Ferry Terminal Station": [7.146343, 125.661256],
     "Panacan Depot Station": [7.148352, 125.659236],
-    "Panacan Bypass Road Station": [7.14375, 125.654367],
+    "Panacan Bypass Road Station": [7.143750, 125.654367],
     "LPU Davao Station": [7.136829, 125.647098],
     "Philippine Nikkei Jin Kai Station": [7.102756, 125.632737],
     "SM Lanang Station": [7.100607, 125.630374],
@@ -92,6 +92,7 @@
     {
       "id": "R102-AM",
       "name": "Toril to GE Torres (AM)",
+      "area": "Toril",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#430dac",
@@ -100,6 +101,7 @@
     {
       "id": "R102-PM",
       "name": "GE Torres to Toril (PM)",
+      "area": "Toril",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#430dac",
@@ -108,6 +110,7 @@
     {
       "id": "R103-AM",
       "name": "Toril to Roxas (AM)",
+      "area": "Toril",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#ff8300",
@@ -116,6 +119,7 @@
     {
       "id": "R103-PM",
       "name": "Toril to Roxas (PM)",
+      "area": "Toril",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#ff8300",
@@ -124,6 +128,7 @@
     {
       "id": "R402-AM",
       "name": "Mintal to GE Torres (AM)",
+      "area": "Mintal",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#266ce4",
@@ -132,6 +137,7 @@
     {
       "id": "R402-PM",
       "name": "GE Torres to Mintal (PM)",
+      "area": "Mintal",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#266ce4",
@@ -140,6 +146,7 @@
     {
       "id": "R403-AM",
       "name": "Mintal to Roxas (AM)",
+      "area": "Mintal",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#0d7f1b",
@@ -148,6 +155,7 @@
     {
       "id": "R403-PM",
       "name": "Mintal to Roxas (PM)",
+      "area": "Mintal",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#0d7f1b",
@@ -156,6 +164,7 @@
     {
       "id": "R503-AM",
       "name": "Bangkal to Roxas (AM)",
+      "area": "Bangkal",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#e8cb14",
@@ -164,6 +173,7 @@
     {
       "id": "R503-PM",
       "name": "Bangkal to Roxas (PM)",
+      "area": "Bangkal",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#e8cb14",
@@ -172,6 +182,7 @@
     {
       "id": "R603-AM",
       "name": "Buhangin to Roxas (AM)",
+      "area": "Buhangin",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#b464af",
@@ -180,6 +191,7 @@
     {
       "id": "R603-PM",
       "name": "Buhangin to Roxas (PM)",
+      "area": "Buhangin",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#b464af",
@@ -188,6 +200,7 @@
     {
       "id": "R763-AM",
       "name": "Panacan via Buhangin to Roxas (AM)",
+      "area": "Panacan",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#609e68",
@@ -196,6 +209,7 @@
     {
       "id": "R763-PM",
       "name": "Panacan via Buhangin to Roxas (PM)",
+      "area": "Panacan",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#609e68",
@@ -204,6 +218,7 @@
     {
       "id": "R783-AM",
       "name": "Panacan via Angliongto to Roxas (AM)",
+      "area": "Panacan",
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#d98346",
@@ -212,10 +227,29 @@
     {
       "id": "R783-PM",
       "name": "Panacan via Angliongto to Roxas (PM)",
+      "area": "Panacan",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#d98346",
       "path": ["Red Cross Roxas Station", "Davao Mental Hospital Station", "NCCC Mall VP Station", "Abreeza Mall Station", "JP Laurel Flyover Station", "Ladislawa Station", "Milan Buhangin Station", "Merco Cabaguio Station", "Carmelite Lanang Station", "SM Lanang Station", "Philippine Nikkei Jin Kai Station", "Angliongto Arcade Station", "Punad Bypass Station", "McDonald's Pagibig Station", "Sta. Lucia Mall Station", "LPU Davao Station", "Panacan Bypass Road Station", "Panacan Depot Station", "Davao-Samal Ferry Terminal Station"]
+    },
+    {
+      "id": "R793-AM",
+      "name": "Panacan via R Castillo to Roxas (AM)",
+      "area": "Panacan",
+      "am": "06:00 - 10:00",
+      "pm": "--",
+      "color": "#6270a6",
+      "path": ["Red Cross Roxas Station", "Davao Mental Hospital Station", "Sta. Ana Sobrecarey Station", "Agdao Flyover Station", "Assumption College Station", "Shell SPMC Station", "Tebow Hospital Lanang Station", "SM Lanang Station", "Starbucks Damosa Station", "Angliongto Arcade Station", "Laverna Station", "Jose Maria College Station", "Landmark Station", "Panacan Avenue Station", "Davao-Samal Ferry Terminal Station"]
+    },
+    {
+      "id": "R793-PM",
+      "name": "Panacan via R Castillo to Roxas (PM)",
+      "area": "Panacan",
+      "am": "--",
+      "pm": "16:00 - 21:00",
+      "color": "#6270a6",
+      "path": ["Red Cross Roxas Station", "Davao Mental Hospital Station", "Sta. Ana Sobrecarey Station", "Agdao Flyover Station", "Assumption College Station", "Shell SPMC Station", "Tebow Hospital Lanang Station", "SM Lanang Station", "Starbucks Damosa Station", "Angliongto Arcade Station", "Punad Bypass Station", "Laverna Station", "Jose Maria College Station", "Landmark Station", "Panacan Avenue Station", "NCCC Panacan Station", "Red Cross Roxas Station"]
     }
   ]
 }
