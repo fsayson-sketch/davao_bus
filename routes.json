@@ -2,7 +2,7 @@
   "stations": {
     "Toril District Hall Station": [7.018598, 125.497186],
     "Fusion GTH Station": [7.025727, 125.504558],
-    "Pepsi Dumoy Station": [7.031084, 125.512510],
+    "Pepsi Dumoy Station": [7.031084, 125.51251],
     "Bago Aplaya Crossing Station": [7.042767, 125.529653],
     "Coastal Road Times Beach Station": [7.045225, 125.591505],
     "Ecoland Terminal Station": [7.0563, 125.601555],
@@ -15,27 +15,35 @@
     "Yellow Fin Quimpo Station": [7.055499, 125.599645],
     "IWHA Station": [7.031802, 125.513287],
     "GTH Station": [7.025851, 125.504517],
-    "Gulf View Station": [7.046206, 125.534704],
-    "Jollibee Puan Station": [7.051554, 125.542387],
-    "Coke Ulas Station": [7.053568, 125.544283],
-    "Ateneo Senior High Station": [7.060701, 125.556798],
-    "SPED Bangkal Station": [7.061255, 125.559564],
-    "Tahimik Avenue Matina Station": [7.060841, 125.563677],
-    "Matina Crossing Station": [7.058172, 125.569759],
-    "Kawayan Drive Station": [7.055764, 125.575410],
-    "DGT Station": [7.058288, 125.580316],
-    "Water District Matina Station": [7.060973, 125.590054],
-    "NCCC Maa Station": [7.061929, 125.593913],
-    "Ateneo Matina Station": [7.062851, 125.597738],
     "GE Torres Station": [7.061449, 125.601184],
     "UM Matina Station": [7.063223, 125.598647],
     "Alorica Davao Station": [7.061576, 125.591562],
     "Shrine Hills Matina Station": [7.057786, 125.579373],
     "Shell Bangkal Station": [7.060689, 125.55521],
-    "Mercury Puan Station": [7.052315, 125.542941],
+    "SPED Bangkal Station": [7.061255, 125.559564],
+    "Tahimik Avenue Matina Station": [7.060841, 125.563677],
+    "Matina Crossing Station": [7.058172, 125.569759],
+    "Kawayan Drive Station": [7.055764, 125.57541],
+    "DGT Station": [7.058288, 125.580316],
+    "Water District Matina Station": [7.060973, 125.590054],
+    "NCCC Maa Station": [7.061929, 125.593913],
+    "Ateneo Matina Station": [7.062851, 125.597738],
+    "Ateneo Senior High Station": [7.060701, 125.556798],
+    "Mintal Palengke Station": [7.091471, 125.502923],
+    "Sto. Nino Mintal Station": [7.08565, 125.508289],
+    "Green Meadows Station": [7.080231, 125.513044],
+    "Catalunan Pequeno Station": [7.074197, 125.518489],
+    "Wellspring Village Station": [7.069527, 125.524611],
+    "PWC Quimpo Station": [7.052876, 125.594497],
+    "LTO Ecoland Station": [7.050824, 125.587704],
+    "Gaisano Capital Station": [7.08059, 125.512963],
+    "Vista Mall Station": [7.085745, 125.508393],
+    "Gulf View Station": [7.046206, 125.534704],
+    "Jollibee Puan Station": [7.051554, 125.542387],
+    "Coke Ulas Station": [7.053568, 125.544283],
     "Apo Golf Station": [7.045904, 125.534033],
     "Shell Bago Aplaya Station": [7.042361, 125.528801],
-    "Artiaga Boulevard Station": [7.064529, 125.614011]
+    "Mercury Puan Station": [7.052315, 125.542941]
   },
   "all_routes": [
     {
@@ -45,11 +53,11 @@
       "pm": "--",
       "color": "#430dac",
       "path": [
-        "Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station", 
-        "Bago Aplaya Crossing Station", "Gulf View Station", "Jollibee Puan Station", 
-        "Coke Ulas Station", "Ateneo Senior High Station", "SPED Bangkal Station", 
-        "Tahimik Avenue Matina Station", "Matina Crossing Station", "Kawayan Drive Station", 
-        "DGT Station", "Water District Matina Station", "NCCC Maa Station", 
+        "Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station",
+        "Bago Aplaya Crossing Station", "Gulf View Station", "Jollibee Puan Station",
+        "Coke Ulas Station", "Ateneo Senior High Station", "SPED Bangkal Station",
+        "Tahimik Avenue Matina Station", "Matina Crossing Station", "Kawayan Drive Station",
+        "DGT Station", "Water District Matina Station", "NCCC Maa Station",
         "Ateneo Matina Station", "GE Torres Station"
       ]
     },
@@ -60,11 +68,11 @@
       "pm": "16:00 - 21:00",
       "color": "#430dac",
       "path": [
-        "Ecoland Terminal Station", "GE Torres Station", "UM Matina Station", 
-        "Alorica Davao Station", "Shrine Hills Matina Station", "Kawayan Drive Station", 
-        "Matina Crossing Station", "Tahimik Avenue Matina Station", "SPED Bangkal Station", 
-        "Shell Bangkal Station", "Coke Ulas Station", "Mercury Puan Station", 
-        "Apo Golf Station", "Shell Bago Aplaya Station", "IWHA Station", 
+        "Ecoland Terminal Station", "GE Torres Station", "UM Matina Station",
+        "Alorica Davao Station", "Shrine Hills Matina Station", "Kawayan Drive Station",
+        "Matina Crossing Station", "Tahimik Avenue Matina Station", "SPED Bangkal Station",
+        "Shell Bangkal Station", "Coke Ulas Station", "Mercury Puan Station",
+        "Apo Golf Station", "Shell Bago Aplaya Station", "IWHA Station",
         "GTH Station", "Toril District Hall Station"
       ]
     },
@@ -75,9 +83,9 @@
       "pm": "--",
       "color": "#ff8300",
       "path": [
-        "Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station", 
-        "Bago Aplaya Crossing Station", "Coastal Road Times Beach Station", 
-        "Ecoland Terminal Station", "Felcris Centrale Station", 
+        "Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station",
+        "Bago Aplaya Crossing Station", "Coastal Road Times Beach Station",
+        "Ecoland Terminal Station", "Felcris Centrale Station",
         "Davao City Police Office Station", "CM Recto Avenue Station", "Red Cross Roxas Station"
       ]
     },
@@ -88,10 +96,40 @@
       "pm": "16:00 - 21:00",
       "color": "#ff8300",
       "path": [
-        "Davao Light (C. Bangoy Street) Station", "A. Bonifacio Street", 
-        "Felcris Centrale Station", "Yellow Fin Quimpo Station", 
-        "Coastal Road Times Beach Station", "Bago Aplaya Crossing Station", 
+        "Davao Light (C. Bangoy Street) Station", "A. Bonifacio Street",
+        "Felcris Centrale Station", "Yellow Fin Quimpo Station",
+        "Coastal Road Times Beach Station", "Bago Aplaya Crossing Station",
         "Pepsi Dumoy Station", "IWHA Station", "GTH Station", "Toril District Hall Station"
+      ]
+    },
+    {
+      "id": "R402-AM",
+      "name": "Mintal to GE Torres (AM)",
+      "am": "06:00 - 10:00",
+      "pm": "--",
+      "color": "#266ce4",
+      "path": [
+        "Mintal Palengke Station", "Sto. Nino Mintal Station", "Green Meadows Station",
+        "Catalunan Pequeno Station", "Wellspring Village Station", "Ateneo Senior High Station",
+        "SPED Bangkal Station", "Tahimik Avenue Matina Station", "Matina Crossing Station",
+        "Kawayan Drive Station", "DGT Station", "Water District Matina Station",
+        "NCCC Maa Station", "Ateneo Matina Station", "GE Torres Station"
+      ]
+    },
+    {
+      "id": "R402-PM",
+      "name": "GE Torres to Mintal (PM)",
+      "am": "--",
+      "pm": "16:00 - 21:00",
+      "color": "#266ce4",
+      "path": [
+        "GE Torres Station", "UM Matina Station", "Alorica Davao Station",
+        "Shrine Hills Matina Station", "Kawayan Drive Station", "Matina Crossing Station",
+        "Tahimik Avenue Matina Station", "SPED Bangkal Station", "Shell Bangkal Station",
+        "Coke Ulas Station", "Mercury Puan Station", "PWC Quimpo Station",
+        "LTO Ecoland Station", "Wellspring Village Station", "Catalunan Pequeno Station",
+        "Gaisano Capital Station", "Vista Mall Station", "Sto. Nino Mintal Station",
+        "Mintal Palengke Station"
       ]
     }
   ]
