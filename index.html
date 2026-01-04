@@ -37,7 +37,7 @@
         .arrow-icon { width: 20px; height: 20px; transition: transform 0.3s ease; fill: white; }
         .rotate-180 { transform: rotate(180deg); }
 
-        /* Exact Card Design from Screenshots */
+        /* Card Design from Screenshots */
         .route-card {
             background: white; padding: 12px; border-radius: 12px; margin-bottom: 10px;
             border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer;
@@ -72,59 +72,56 @@
     let currentRouteMarkers = [];
     let userMarker = null;
 
-    // 2. Build UI from JSON
+    // 2. Load Routes and Build UI
     async function loadRoutes() {
-    try {
-        const response = await fetch('routes.json');
-        const data = await response.json();
-        window.busData = data;
-        
-        const listContainer = document.getElementById('route-list');
-        listContainer.innerHTML = ''; 
+        try {
+            const response = await fetch('routes.json');
+            const data = await response.json();
+            window.busData = data;
+            
+            const listContainer = document.getElementById('route-list');
+            listContainer.innerHTML = ''; 
 
-        // We get unique route prefixes (e.g., "R102", "R103") directly from your data
-        const uniqueGroups = [...new Set(data.all_routes.map(r => r.id.split('-')[0]))];
-        
-        uniqueGroups.forEach(groupName => {
-            const am = data.all_routes.find(r => r.id === groupName + "-AM");
-            const pm = data.all_routes.find(r => r.id === groupName + "-PM");
+            // Automatically find unique groups (e.g., R102, R103)
+            const uniqueGroups = [...new Set(data.all_routes.map(r => r.id.split('-')[0]))];
+            
+            uniqueGroups.forEach(groupName => {
+                const am = data.all_routes.find(r => r.id === groupName + "-AM");
+                const pm = data.all_routes.find(r => r.id === groupName + "-PM");
 
-            // Only create the group if at least one trip (AM or PM) exists
-            if (am || pm) {
-                listContainer.innerHTML += `
-                    <div class="route-group-box">
-                        <div class="main-route-header" onclick="toggleSubCards('${groupName}')">
-                            <span>ROUTE ${groupName.replace('R','')}</span>
-                            <svg id="icon-${groupName}" class="arrow-icon" viewBox="0 0 20 20">
-                                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                            </svg>
+                if (am || pm) {
+                    listContainer.innerHTML += `
+                        <div class="route-group-box">
+                            <div class="main-route-header" onclick="toggleSubCards('${groupName}')">
+                                <span>ROUTE ${groupName.replace('R','')}</span>
+                                <svg id="icon-${groupName}" class="arrow-icon" viewBox="0 0 20 20">
+                                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                                </svg>
+                            </div>
+                            <div class="sub-cards-container" id="container-${groupName}">
+                                ${am ? createCardHTML(am, '☀️') : ''}
+                                ${pm ? createCardHTML(pm, '🌙') : ''}
+                            </div>
                         </div>
-                        <div class="sub-cards-container" id="container-${groupName}">
-                            ${am ? renderCard(am, '☀️') : ''}
-                            ${pm ? renderCard(pm, '🌙') : ''}
-                        </div>
-                    </div>
-                `;
-            }
-        });
-    } catch (error) { 
-        console.error("Error loading JSON:", error); 
+                    `;
+                }
+            });
+        } catch (error) { console.error("Error loading JSON:", error); }
     }
-}
 
-// Helper function to keep the code clean
-function renderCard(route, icon) {
-    return `
-        <div class="route-card" onclick="selectRoute('${route.id}')">
-            <div><span class="route-id">${route.id}</span> <span class="route-name">${route.name}</span></div>
-            <div class="schedule-box">
-                <div class="time-badge">${icon} ${icon === '☀️' ? route.am : route.pm}</div>
+    // Safely create card HTML
+    function createCardHTML(route, emoji) {
+        return `
+            <div class="route-card" onclick="selectRoute('${route.id}')">
+                <div><span class="route-id">${route.id}</span> <span class="route-name">${route.name}</span></div>
+                <div class="schedule-box">
+                    <div class="time-badge">${emoji} ${emoji === '☀️' ? route.am : route.pm}</div>
+                </div>
             </div>
-        </div>
-    `;
-}
+        `;
+    }
 
-    // 3. Toggle Logic for Modern Chevron Icon
+    // Toggle logic for SVG icons
     function toggleSubCards(groupId) {
         const container = document.getElementById('container-' + groupId);
         const icon = document.getElementById('icon-' + groupId);
@@ -138,13 +135,15 @@ function renderCard(route, icon) {
         }
     }
 
-    // 4. Drawing and Auto-Location Logic
+    // Map Drawing and Auto-Location
     function selectRoute(routeId) {
         const route = window.busData.all_routes.find(r => r.id === routeId);
+        if (!route) return;
+
         const coords = route.path.map(name => window.busData.stations[name]);
         
         document.getElementById('bus-id').innerHTML = `<b>Selected:</b> ${route.id}`;
-        document.getElementById('nearest-info').innerText = "Finding your location...";
+        document.getElementById('nearest-info').innerText = "Locating...";
 
         if (currentPathLine) map.removeLayer(currentPathLine);
         currentRouteMarkers.forEach(m => map.removeLayer(m));
@@ -162,13 +161,15 @@ function renderCard(route, icon) {
 
         map.fitBounds(currentPathLine.getBounds(), {padding: [40, 40]});
         
-        // Auto-Geolocation
+        // Auto-Location trigger
         navigator.geolocation.getCurrentPosition(pos => {
             const uLat = pos.coords.latitude, uLng = pos.coords.longitude;
             const dist = getDistance(uLat, uLng, coords[0][0], coords[0][1]);
             document.getElementById('nearest-info').innerHTML = `Distance: <b>${dist.toFixed(2)} km</b> from start`;
             if (userMarker) map.removeLayer(userMarker);
             userMarker = L.marker([uLat, uLng]).addTo(map).bindPopup("You are here").openPopup();
+        }, (err) => {
+            document.getElementById('nearest-info').innerText = "Location access denied.";
         });
     }
 
