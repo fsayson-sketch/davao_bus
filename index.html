@@ -86,14 +86,10 @@
                 </div>`;
         }
 
-        function handleSelect(routeId) {
-            const route = routeManager.getRouteById(routeId);
-            
-            // --- THE FIX IS HERE ---
-            // Defensive check: This prevents 'undefined' coords from crashing Leaflet
             const coords = route.path
-                .map(name => routeManager.stations[name])
-                .filter(c => c !== undefined);
+            .map(name => routeManager.stations[name])
+            .filter(c => c !== undefined); // This is the shield that prevents the crash
+            
 
             if (coords.length === 0) {
                 document.getElementById('nearest-info').innerText = "Error: Invalid route station names.";
