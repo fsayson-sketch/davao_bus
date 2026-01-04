@@ -17,7 +17,6 @@
 
         .status-card { border-left: 5px solid #007bff; background: #eef6ff; padding: 12px; border-radius: 8px; margin-bottom: 10px; flex-shrink: 0; position: relative; }
         
-        /* Loading Spinner Animation */
         .spinner {
             display: none; width: 18px; height: 18px; border: 3px solid rgba(0,123,255,.3);
             border-radius: 50%; border-top-color: #007bff; animation: spin 1s ease-in-out infinite;
@@ -66,7 +65,7 @@
     const map = L.map('map', { zoomControl: false }).setView([7.0650, 125.5700], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-    let currentPathLine = null, currentRouteMarkers = [], userMarker = null;
+    let currentPathLine = null, currentRouteMarkers = [], userMarker = null, nearestMarker = null;
 
     async function loadRoutes() {
         try {
@@ -113,44 +112,71 @@
 
     function selectRoute(routeId) {
         const route = window.busData.all_routes.find(r => r.id === routeId);
-        const coords = route.path.map(name => window.busData.stations[name]);
+        const stationsInPath = route.path.map(name => ({
+            name: name,
+            coords: window.busData.stations[name]
+        }));
+
         document.getElementById('bus-id').innerHTML = `<b>Selected:</b> ${route.id}`;
-        
-        // UI Visual Feedback
-        document.getElementById('nearest-info').innerText = "Locating your position...";
+        document.getElementById('nearest-info').innerText = "Finding nearest station...";
         document.getElementById('loader').style.display = "block";
 
         if (currentPathLine) map.removeLayer(currentPathLine);
         currentRouteMarkers.forEach(m => map.removeLayer(m));
         currentRouteMarkers = [];
 
-        currentPathLine = L.polyline(coords, {color: '#007bff', weight: 6}).addTo(map);
-        route.path.forEach((name, index) => {
-            let color = (index === 0) ? '#28a745' : (index === route.path.length-1) ? '#dc3545' : '#007bff';
-            const m = L.circleMarker(window.busData.stations[name], {
-                radius: (index === 0 || index === route.path.length-1) ? 8 : 5,
+        const lineCoords = stationsInPath.map(s => s.coords);
+        currentPathLine = L.polyline(lineCoords, {color: '#007bff', weight: 6}).addTo(map);
+
+        stationsInPath.forEach((station, index) => {
+            let color = (index === 0) ? '#28a745' : (index === stationsInPath.length-1) ? '#dc3545' : '#007bff';
+            const m = L.circleMarker(station.coords, {
+                radius: (index === 0 || index === stationsInPath.length-1) ? 8 : 5,
                 color: color, fillColor: 'white', fillOpacity: 1
-            }).addTo(map).bindTooltip(name);
-            currentRouteMarkers.push(m);
+            }).addTo(map).bindTooltip(station.name);
+            currentRouteMarkers.push({ marker: m, name: station.name, coords: station.coords });
         });
 
         map.fitBounds(currentPathLine.getBounds(), {padding: [40, 40]});
         
-        // Optimized GPS Request
+        autoLocateToNearest(stationsInPath);
+    }
+
+    function autoLocateToNearest(stations) {
         navigator.geolocation.getCurrentPosition(
             (pos) => {
                 const uLat = pos.coords.latitude, uLng = pos.coords.longitude;
-                const dist = getDistance(uLat, uLng, coords[0][0], coords[0][1]);
-                document.getElementById('nearest-info').innerHTML = `Distance: <b>${dist.toFixed(2)} km</b> from start`;
+                let nearest = null;
+                let minDrive = Infinity;
+
+                stations.forEach(station => {
+                    const dist = getDistance(uLat, uLng, station.coords[0], station.coords[1]);
+                    if (dist < minDrive) {
+                        minDrive = dist;
+                        nearest = station;
+                    }
+                });
+
+                document.getElementById('nearest-info').innerHTML = `Nearest: <b>${nearest.name}</b> (${minDrive.toFixed(2)} km)`;
                 document.getElementById('loader').style.display = "none";
+
                 if (userMarker) map.removeLayer(userMarker);
                 userMarker = L.marker([uLat, uLng]).addTo(map).bindPopup("You are here").openPopup();
+                
+                // Highlight nearest station marker specifically
+                if (nearestMarker) map.removeLayer(nearestMarker);
+                nearestMarker = L.circleMarker(nearest.coords, {
+                    radius: 12, color: '#ffc107', fillColor: '#ffc107', fillOpacity: 0.4
+                }).addTo(map).bindTooltip("Nearest Station: " + nearest.name).openTooltip();
+
+                const group = new L.featureGroup([userMarker, nearestMarker]);
+                map.fitBounds(group.getBounds().pad(0.5));
             },
             () => {
-                document.getElementById('nearest-info').innerText = "Location denied.";
+                document.getElementById('nearest-info').innerText = "Location access denied.";
                 document.getElementById('loader').style.display = "none";
             },
-            { enableHighAccuracy: false, timeout: 5000, maximumAge: 10000 } // Optimization settings
+            { enableHighAccuracy: false, timeout: 5000, maximumAge: 10000 }
         );
     }
 
