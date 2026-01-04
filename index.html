@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bus Demo - R-4702</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: sans-serif; background: #f8f9fa; }
+        #map { height: 65vh; width: 100%; }
+        .ui-container { height: 35vh; padding: 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; }
+        .btn-locate { background: #28a745; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 16px; }
+        .status-card { border-left: 5px solid #007bff; background: white; padding: 10px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .station-label { font-weight: bold; color: #555; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="ui-container">
+    <div class="status-card">
+        <div id="bus-id"><b>Bus:</b> R-4702</div>
+        <div id="nearest-info">Get Location to find distance</div>
+    </div>
+    <button class="btn-locate" onclick="findMe()">📍 Get Location</button>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // 1. Setup Map
+    const map = L.map('map', { zoomControl: false }).setView([7.0707, 125.6087], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    // 2. The "Admin" Setup (Your JSON logic)
+    const data = {
+        "bus_now": [7.0850, 125.6150],
+        "path": [[7.0707, 125.6087], [7.0850, 125.6150], [7.1000, 125.6300]],
+        "stations": [
+            {"name": "Station 1", "coords": [7.0707, 125.6087]},
+            {"name": "Station 2", "coords": [7.0850, 125.6150]},
+            {"name": "Station 3", "coords": [7.1000, 125.6300]}
+        ]
+    };
+
+    // 3. Draw Path & Flags
+    L.polyline(data.path, {color: '#007bff', weight: 4}).addTo(map);
+    
+    data.stations.forEach(st => {
+        L.marker(st.coords).addTo(map)
+            .bindTooltip(st.name, {permanent: true, direction: 'right', className: 'station-label'});
+    });
+
+    // Bus Icon
+    const busIcon = L.circleMarker(data.bus_now, {radius: 10, color: 'red', fillOpacity: 1}).addTo(map).bindPopup("Current Bus Position");
+
+    // 4. Distance Logic
+    function getDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2-lat1) * Math.PI / 180;
+        const dLon = (lon2-lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+    }
+
+    function findMe() {
+        if (!navigator.geolocation) {
+            document.getElementById('nearest-info').innerText = "Alocation not supported"; // 
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(pos => {
+            const uLat = pos.coords.latitude;
+            const uLng = pos.coords.longitude;
+            const dist = getDistance(uLat, uLng, data.bus_now[0], data.bus_now[1]);
+
+            if (dist > 10) {
+                document.getElementById('nearest-info').innerHTML = "<span style='color:red'>xno bus nearby</span>"; // 
+            } else {
+                document.getElementById('nearest-info').innerText = `nearest bus is ${dist.toFixed(2)} km`; // 
+            }
+
+            L.marker([uLat, uLng]).addTo(map).bindPopup("You are here").openPopup();
+            map.flyTo([uLat, uLng], 14);
+        });
+    }
+</script>
+</body>
+</html>
