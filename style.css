@@ -1,54 +1,23 @@
-/* Layout Reset */
 body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; background: #f0f2f5; overflow: hidden; }
-
-/* Map & UI Layout */
 #map { height: 50vh; width: 100%; z-index: 1; }
-
-.ui-container { 
-    height: 50vh; padding: 15px; box-sizing: border-box; display: flex; flex-direction: column; 
-    background: #ffffff; border-top-left-radius: 20px; border-top-right-radius: 20px; 
-    margin-top: -20px; position: relative; z-index: 1000; box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-}
-
-.privacy-note { 
-    font-size: 10px; color: #888; text-align: center; padding: 10px 5px; border-top: 1px solid #eee; background: #fff; flex-shrink: 0; width: 100%;
-}
-
-/* Status Cards */
+.ui-container { height: 50vh; padding: 15px; box-sizing: border-box; display: flex; flex-direction: column; background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: -20px; position: relative; z-index: 1000; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
+.privacy-note { font-size: 10px; color: #888; text-align: center; padding: 10px 5px; border-top: 1px solid #eee; background: #fff; flex-shrink: 0; }
 .status-card { border-left: 5px solid #007bff; background: #eef6ff; padding: 12px; border-radius: 8px; margin-bottom: 10px; flex-shrink: 0; position: relative; }
-
-/* Loader Spinner */
-.spinner {
-    display: none; width: 18px; height: 18px; border: 3px solid rgba(0,123,255,.3);
-    border-radius: 50%; border-top-color: #007bff; animation: spin 1s ease-in-out infinite;
-    position: absolute; right: 15px; top: 15px;
-}
+.spinner { display: none; width: 18px; height: 18px; border: 3px solid rgba(0,123,255,.3); border-radius: 50%; border-top-color: #007bff; animation: spin 1s ease-in-out infinite; position: absolute; right: 15px; top: 15px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* Route List */
-#route-list { flex-grow: 1; overflow-y: auto; padding-right: 5px; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
-
-/* Group & Header Styles */
+#route-list { flex-grow: 1; overflow-y: auto; padding-right: 5px; -webkit-overflow-scrolling: touch; }
 .route-group-box { margin-bottom: 15px; }
+.main-route-header { color: white; padding: 12px 15px; border-radius: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.header-text-container { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; }
+.route-number-text { font-weight: 800; font-size: 16px; }
 
-.main-route-header {
-    background: #007bff; color: white; padding: 12px 15px; border-radius: 12px;
-    font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 8px;
-}
-
-.sub-cards-container { display: none; padding-left: 10px; border-left: 2px dashed #007bff; margin-left: 10px; }
-
-/* Icons & Animation */
+/* Fixed Area Badge for text and SVG alignment */
+.area-badge { display: flex; align-items: center;  font-size: 9px;  font-weight: 600;  opacity: 0.9;  background: rgba(255,255,255,0.25);  padding: 2px 6px; border-radius: 4px;  margin-top: 3px;  text-transform: uppercase; }
+.sub-cards-container { display: none; padding-left: 10px; border-left: 2px dashed #007bff; margin-left: 10px; margin-top: 8px; }
 .arrow-icon { width: 20px; height: 20px; transition: transform 0.3s ease; fill: white; }
 .rotate-180 { transform: rotate(180deg); }
-
-/* Card Styles */
-.route-card {
-    background: white; padding: 12px; border-radius: 12px; margin-bottom: 10px;
-    border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer;
-}
-.route-id { background: #007bff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; margin-right: 8px; }
+.route-card { background: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; }
+.route-id { color: white; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; margin-right: 8px; }
 .route-name { font-weight: bold; color: #333; font-size: 14px; }
 .schedule-box { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #555; }
 .time-badge { background: #f8f9fa; padding: 4px 8px; border-radius: 6px; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }

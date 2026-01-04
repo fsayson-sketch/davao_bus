@@ -40,18 +40,19 @@
     const groups = [...new Set(routes.map(r => r.id.split('-')[0]))];
     list.innerHTML = ""; 
 
+    // Double Arrow SVG Icon for a professional look
+    const arrowIcon = `<svg style="width:12px;height:12px;margin:0 4px;vertical-align:middle;" viewBox="0 0 24 24"><path fill="currentColor" d="M17,11H3V9H17V5L21,10L17,15V11M7,13V17L3,12L7,7V11H21V13H7Z" /></svg>`;
+
     groups.forEach(groupId => {
         const am = routeManager.getRouteById(`${groupId}-AM`);
         const pm = routeManager.getRouteById(`${groupId}-PM`);
         const routeData = am || pm;
         
         if (routeData) {
-            // Logic to clean the name and create a professional corridor label
-            // Extracts "Mintal to Roxas" -> "MINTAL ↔ ROXAS"
-            const corridor = routeData.name
-                .replace(/\(AM\)|\(PM\)/g, '') // Remove (AM)/(PM)
-                .replace('to', '↔')            // Professional arrow
-                .trim();
+            // Logic to split "Mintal to Roxas" into two clean parts
+            const parts = routeData.name.replace(/\(AM\)|\(PM\)/g, '').split(' to ');
+            const origin = parts[0]?.trim().toUpperCase() || "";
+            const destination = parts[1]?.trim().toUpperCase() || "";
 
             const themeColor = routeData.color || '#007bff';
 
@@ -60,7 +61,11 @@
                     <div class="main-route-header" style="background: ${themeColor}" onclick="toggleSubCards('${groupId}')">
                         <div class="header-text-container">
                             <span class="route-number-text">ROUTE ${groupId.replace('R','')}</span>
-                            <span class="area-badge">${corridor.toUpperCase()}</span>
+                            <div class="area-badge">
+                                <span>${origin}</span>
+                                ${arrowIcon}
+                                <span>${destination}</span>
+                            </div>
                         </div>
                         <svg id="icon-${groupId}" class="arrow-icon" viewBox="0 0 20 20">
                             <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
