@@ -6,13 +6,9 @@
     <title>Bus Tracker - DB NearMe</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        /* Force the body to be exactly the height of the screen */
         body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; background: #f0f2f5; overflow: hidden; }
-        
-        /* Map Section */
         #map { height: 50vh; width: 100%; z-index: 1; }
-
-        /* UI Container: Uses Flexbox to organize content */
+        
         .ui-container { 
             height: 50vh; 
             padding: 15px; 
@@ -28,21 +24,18 @@
             box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
         }
 
-        /* Status Card stays at the top */
         .status-card { 
             border-left: 5px solid #007bff; 
             background: #eef6ff; 
-            padding: 10px; 
+            padding: 12px; 
             border-radius: 8px; 
             margin-bottom: 10px;
             flex-shrink: 0; 
         }
 
-        /* The List: The only part that is allowed to scroll */
         #route-list {
             flex-grow: 1; 
             overflow-y: auto;
-            margin-bottom: 10px;
             padding-right: 5px;
             -webkit-overflow-scrolling: touch; 
         }
@@ -57,26 +50,10 @@
             cursor: pointer;
         }
 
-        .route-id { background: #007bff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; margin-right: 8px; }
+        .route-id { background: #007bff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; margin-right: 8px; }
         .route-name { font-weight: bold; color: #333; font-size: 14px; }
         .schedule-box { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #555; }
         .time-badge { background: #f8f9fa; padding: 4px 8px; border-radius: 6px; border: 1px solid #eee; }
-
-        /* The Button: flex-shrink: 0 ensures it is NEVER pushed out of the container */
-        .btn-locate { 
-            background: #28a745; 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            border-radius: 12px; 
-            font-weight: bold; 
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            flex-shrink: 0; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .btn-locate:active { background: #218838; transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -86,13 +63,11 @@
 <div class="ui-container">
     <div class="status-card">
         <div id="bus-id"><b>Tracker:</b> Ready</div>
-        <div id="nearest-info">Select a route to begin</div>
+        <div id="nearest-info">Tap a route to see distance</div>
     </div>
 
     <div id="route-list">
         </div>
-
-    <button class="btn-locate" onclick="findMe()">📍 Get My Location</button>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -103,62 +78,77 @@
     let currentPathLine = null;
     let currentRouteMarkers = [];
     let userMarker = null;
-    let targetCoords = null;
 
     async function loadRoutes() {
         try {
             const response = await fetch('routes.json');
             const data = await response.json();
             window.busData = data;
-            
             const listContainer = document.getElementById('route-list');
             listContainer.innerHTML = ''; 
-
             data.all_routes.forEach(route => {
                 listContainer.innerHTML += `
-                    <div class="route-card" onclick="drawRoute('${route.id}')">
+                    <div class="route-card" onclick="selectRoute('${route.id}')">
                         <div><span class="route-id">${route.id}</span> <span class="route-name">${route.name}</span></div>
                         <div class="schedule-box">
                             <div class="time-badge">☀️ ${route.am}</div>
                             <div class="time-badge">🌙 ${route.pm}</div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
-        } catch (error) {
-            console.error("JSON Error:", error);
-        }
+        } catch (error) { console.error("JSON Error:", error); }
     }
 
-    function drawRoute(routeId) {
+    function selectRoute(routeId) {
         const route = window.busData.all_routes.find(r => r.id === routeId);
         const coords = route.path.map(name => window.busData.stations[name]);
-        targetCoords = coords[0]; 
+        const startPoint = coords[0];
 
         document.getElementById('bus-id').innerHTML = `<b>Selected:</b> ${route.id}`;
-        document.getElementById('nearest-info').innerText = `Start: ${route.path[0]}`;
+        document.getElementById('nearest-info').innerText = "Locating you...";
 
+        // Map drawing
         if (currentPathLine) map.removeLayer(currentPathLine);
         currentRouteMarkers.forEach(m => map.removeLayer(m));
         currentRouteMarkers = [];
 
         currentPathLine = L.polyline(coords, {color: '#007bff', weight: 6}).addTo(map);
-        
         route.path.forEach((name, index) => {
-            let markerColor = '#007bff';
-            if (index === 0) markerColor = '#28a745';
-            else if (index === route.path.length - 1) markerColor = '#dc3545';
-
+            let markerColor = (index === 0) ? '#28a745' : (index === route.path.length - 1) ? '#dc3545' : '#007bff';
             const m = L.circleMarker(window.busData.stations[name], {
-                radius: index === 0 || index === route.path.length - 1 ? 8 : 5,
-                color: markerColor,
-                fillColor: 'white',
-                fillOpacity: 1
+                radius: (index === 0 || index === route.path.length - 1) ? 8 : 5,
+                color: markerColor, fillColor: 'white', fillOpacity: 1
             }).addTo(map).bindTooltip(name);
             currentRouteMarkers.push(m);
         });
 
         map.fitBounds(currentPathLine.getBounds(), {padding: [40, 40]});
+
+        // AUTO GEOLOCATION TRIGGER
+        autoLocate(startPoint);
+    }
+
+    function autoLocate(target) {
+        if (!navigator.geolocation) {
+            document.getElementById('nearest-info').innerText = "GPS not supported";
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(pos => {
+            const uLat = pos.coords.latitude;
+            const uLng = pos.coords.longitude;
+            const dist = getDistance(uLat, uLng, target[0], target[1]);
+
+            document.getElementById('nearest-info').innerHTML = `You are <b>${dist.toFixed(2)} km</b> from start`;
+
+            if (userMarker) map.removeLayer(userMarker);
+            userMarker = L.marker([uLat, uLng]).addTo(map).bindPopup("You are here").openPopup();
+            
+            const group = new L.featureGroup([userMarker, L.circleMarker(target)]);
+            map.fitBounds(group.getBounds().pad(0.5));
+        }, () => {
+            document.getElementById('nearest-info').innerText = "Enable GPS to see distance";
+        });
     }
 
     function getDistance(lat1, lon1, lat2, lon2) {
@@ -168,27 +158,6 @@
         const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                   Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2) * Math.sin(dLon/2);
         return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
-    }
-
-    function findMe() {
-        if (!targetCoords) { alert("Select a route first!"); return; }
-        if (!navigator.geolocation) { alert("GPS not supported"); return; }
-
-        navigator.geolocation.getCurrentPosition(pos => {
-            const uLat = pos.coords.latitude;
-            const uLng = pos.coords.longitude;
-            const dist = getDistance(uLat, uLng, targetCoords[0], targetCoords[1]);
-
-            document.getElementById('nearest-info').innerHTML = `Dist: <b>${dist.toFixed(2)} km</b> to start`;
-
-            if (userMarker) map.removeLayer(userMarker);
-            userMarker = L.marker([uLat, uLng]).addTo(map).bindPopup("You are here").openPopup();
-            
-            const group = new L.featureGroup([userMarker, L.circleMarker(targetCoords)]);
-            map.fitBounds(group.getBounds().pad(0.5));
-        }, () => {
-            alert("Please enable Location services in your browser settings.");
-        });
     }
 
     loadRoutes();
