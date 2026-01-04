@@ -20,13 +20,12 @@
         <div id="route-list"></div>
 
         <div class="privacy-note">
-        <b>Privacy Note:</b> Your location is processed locally. 
+            <b>Privacy Note:</b> Your location is processed locally. 
             No data is saved or transmitted.
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
     <script src="js/MapManager.js"></script>
     <script src="js/RouteManager.js"></script>
     
@@ -86,24 +85,26 @@
                 </div>`;
         }
 
-        // Restored missing function declaration here
-        function handleSelect(routeId) {
+        // Updated with async/await for road-following logic
+        async function handleSelect(routeId) {
             const route = routeManager.getRouteById(routeId);
-            
-            // This is the shield that prevents the "reading 'lat'" crash
+            if (!route) return;
+
             const coords = route.path
                 .map(name => routeManager.stations[name])
-                .filter(c => c !== undefined); 
+                .filter(c => c !== undefined);
 
             if (coords.length === 0) {
-                document.getElementById('nearest-info').innerText = "Error: Invalid route station names.";
+                document.getElementById('nearest-info').innerText = "Route data missing.";
                 return;
             }
-            
-            mapManager.drawRoute(coords, route.path, route.color);
-            
+
             document.getElementById('loader').style.display = "block";
             document.getElementById('bus-id').innerHTML = `<b>Selected:</b> ${route.id}`;
+            document.getElementById('nearest-info').innerText = "Calculating road path...";
+
+            // Draw route following the roads
+            await mapManager.drawRoute(coords, route.path, route.color);
 
             navigator.geolocation.getCurrentPosition(pos => {
                 const nearest = routeManager.findNearestStation(pos.coords.latitude, pos.coords.longitude, route.path);
