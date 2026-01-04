@@ -17,6 +17,13 @@
     "NCCC Maa": [7.0600, 125.5900],
     "Ateneo Matina": [7.0600, 125.6000],
     "GE Torres (Sandawa)": [7.0584, 125.6013],
+    "Ecoland Terminal": [7.0540, 125.6000],
+    "UM Matina": [7.0630, 125.5950],
+    "Alorica Davao": [7.0650, 125.5960],
+    "Shrine Hills Matina": [7.0680, 125.5850],
+    "Shell Bangkal": [7.0610, 125.5640],
+    "Mercury Puan": [7.0490, 125.5410],
+    "Apo Golf": [7.0420, 125.5200],
     "Yellow Fin Quimpo": [7.0550, 125.6100],
     "Coastal Rd. Times Beach": [7.0400, 125.5900],
     "Shell Bago Aplaya": [7.0400, 125.5300],
@@ -38,11 +45,13 @@
     },
     {
       "id": "R102-PM",
-      "name": "GE Torres to Toril (Return)",
+      "name": "Ecoland to Toril (PM)",
       "am": "--",
       "pm": "4:00 PM - 9:00 PM",
       "path": [
-        "GE Torres (Sandawa)", "Yellow Fin Quimpo", "Coastal Rd. Times Beach", 
+        "Ecoland Terminal", "GE Torres (Sandawa)", "UM Matina", "Alorica Davao", 
+        "Shrine Hills Matina", "Kawayan Drive", "Matina Crossing", "Tahimik Ave. Matina", 
+        "SPED Bangkal", "Shell Bangkal", "Coke Ulas", "Mercury Puan", "Apo Golf", 
         "Shell Bago Aplaya", "IWHA", "GTH", "Toril District Hall"
       ]
     }
