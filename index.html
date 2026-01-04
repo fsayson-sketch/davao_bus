@@ -35,16 +35,17 @@
     let routeManager;
 
     async function init() {
-        try {
-            // Ensure routes.json is in the root folder
-            const response = await fetch('routes.json');
-            const data = await response.json();
-            routeManager = new RouteManager(data.stations, data.all_routes);
-            renderUI(data.all_routes);
-        } catch (err) {
-            console.error("Initialization failed:", err);
-        }
+    try {
+        // Adding ?v=1.1 forces the browser to download the fresh file
+        // instead of using the old version in its memory.
+        const response = await fetch('routes.json?v=' + Date.now()); 
+        const data = await response.json();
+        routeManager = new RouteManager(data.stations, data.all_routes);
+        renderUI(data.all_routes);
+    } catch (err) {
+        console.error("Initialization failed:", err);
     }
+}
 
     function renderUI(routes) {
         const list = document.getElementById('route-list');
