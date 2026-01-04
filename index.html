@@ -6,22 +6,76 @@
     <title>Bus Tracker - DB NearMe</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f0f2f5; overflow: hidden; }
-        #map { height: 55vh; width: 100%; z-index: 1; }
+        /* Prevents the whole page from scrolling, only the list should scroll */
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; background: #f0f2f5; overflow: hidden; }
+        
+        /* Map takes up 50% of the screen */
+        #map { height: 50vh; width: 100%; z-index: 1; }
+
+        /* UI Container takes up the other 50% and stays inside the screen */
         .ui-container { 
-            height: 45vh; padding: 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; 
-            background: #ffffff; border-top-left-radius: 20px; border-top-right-radius: 20px; margin-top: -20px; 
-            position: relative; z-index: 1000; box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            height: 50vh; 
+            padding: 15px; 
+            box-sizing: border-box; 
+            display: flex; 
+            flex-direction: column; 
+            background: #ffffff;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            margin-top: -20px;
+            position: relative;
+            z-index: 1000;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
         }
-        .status-card { border-left: 5px solid #007bff; background: #eef6ff; padding: 12px; border-radius: 8px; flex-shrink: 0; }
-        #route-list { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
-        .route-card { background: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; }
+
+        .status-card { 
+            border-left: 5px solid #007bff; 
+            background: #eef6ff; 
+            padding: 10px; 
+            border-radius: 8px; 
+            margin-bottom: 10px;
+            flex-shrink: 0; /* Prevents this from squishing */
+        }
+
+        /* The Scrollable List Area */
+        #route-list {
+            flex: 1; /* This takes up all available space between the card and button */
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding-right: 5px;
+            -webkit-overflow-scrolling: touch; /* Smooth scroll for iPhones */
+        }
+
+        .route-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
         .route-id { background: #007bff; color: white; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; margin-right: 8px; }
         .route-name { font-weight: bold; color: #333; font-size: 14px; }
         .schedule-box { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #555; }
         .time-badge { background: #f8f9fa; padding: 4px 8px; border-radius: 6px; border: 1px solid #eee; }
-        .btn-locate { background: #28a745; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
-        .btn-locate:active { transform: scale(0.98); background: #218838; }
+
+        /* Locate Button - Fixed at the bottom of the container */
+        .btn-locate { 
+            background: #28a745; 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            flex-shrink: 0; /* Ensures button is always visible */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-locate:active { background: #218838; transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -30,30 +84,26 @@
 
 <div class="ui-container">
     <div class="status-card">
-        <div id="bus-id"><b>Tracker:</b> Waiting for Selection</div>
-        <div id="nearest-info">Select a route to check distance</div>
+        <div id="bus-id"><b>Tracker:</b> Waiting...</div>
+        <div id="nearest-info">Select a route below</div>
     </div>
 
     <div id="route-list">
-        <p style="text-align:center; color:#999;">Loading routes...</p>
-    </div>
+        </div>
 
     <button class="btn-locate" onclick="findMe()">📍 Get My Location</button>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // 1. Setup Map
     const map = L.map('map', { zoomControl: false }).setView([7.0650, 125.5700], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-    // Global variables to keep track of current map objects
     let currentPathLine = null;
-    let currentRouteMarkers = [];
+    let currentMarkers = [];
     let userMarker = null;
-    let targetCoords = null; // This will store the coords to measure distance to
+    let targetCoords = null;
 
-    // 2. Load Routes from JSON
     async function loadRoutes() {
         try {
             const response = await fetch('routes.json');
@@ -75,40 +125,34 @@
                 `;
             });
         } catch (error) {
-            console.error("Error loading JSON:", error);
+            console.error("JSON Error:", error);
         }
     }
 
-    // 3. Draw Route Logic
     function drawRoute(routeId) {
         const route = window.busData.all_routes.find(r => r.id === routeId);
         const coords = route.path.map(name => window.busData.stations[name]);
-
-        // Set the FIRST station of the route as the target for the "Get My Location" button
         targetCoords = coords[0]; 
+
         document.getElementById('bus-id').innerHTML = `<b>Selected:</b> ${route.id}`;
-        document.getElementById('nearest-info').innerText = `Tap Location to measure distance to ${route.path[0]}`;
+        document.getElementById('nearest-info').innerText = `Distance to ${route.path[0]}`;
 
-        // Clear old map layers
         if (currentPathLine) map.removeLayer(currentPathLine);
-        currentRouteMarkers.forEach(m => map.removeLayer(m));
-        currentRouteMarkers = [];
+        currentMarkers.forEach(m => map.removeLayer(m));
+        currentMarkers = [];
 
-        // Draw new line
-        currentPathLine = L.polyline(coords, {color: '#007bff', weight: 6, opacity: 0.8}).addTo(map);
+        currentPathLine = L.polyline(coords, {color: '#007bff', weight: 6}).addTo(map);
         
-        // Add markers for stations
         route.path.forEach(name => {
             const m = L.circleMarker(window.busData.stations[name], {
                 radius: 6, color: '#007bff', fillColor: 'white', fillOpacity: 1
             }).addTo(map).bindTooltip(name);
-            currentRouteMarkers.push(m);
+            currentMarkers.push(m);
         });
 
-        map.fitBounds(currentPathLine.getBounds(), {padding: [40, 40]});
+        map.fitBounds(currentPathLine.getBounds(), {padding: [30, 30]});
     }
 
-    // 4. Geolocation Logic
     function getDistance(lat1, lon1, lat2, lon2) {
         const R = 6371;
         const dLat = (lat2-lat1) * Math.PI / 180;
@@ -119,32 +163,23 @@
     }
 
     function findMe() {
-        if (!targetCoords) {
-            alert("Please select a bus route first!");
-            return;
-        }
-
-        if (!navigator.geolocation) {
-            alert("Geolocation not supported");
-            return;
-        }
+        if (!targetCoords) { alert("Select a route first!"); return; }
+        if (!navigator.geolocation) { alert("GPS not supported"); return; }
 
         navigator.geolocation.getCurrentPosition(pos => {
             const uLat = pos.coords.latitude;
             const uLng = pos.coords.longitude;
             const dist = getDistance(uLat, uLng, targetCoords[0], targetCoords[1]);
 
-            document.getElementById('nearest-info').innerHTML = 
-                `Distance to start: <b>${dist.toFixed(2)} km</b>`;
+            document.getElementById('nearest-info').innerHTML = `Dist: <b>${dist.toFixed(2)} km</b> to start`;
 
             if (userMarker) map.removeLayer(userMarker);
             userMarker = L.marker([uLat, uLng]).addTo(map).bindPopup("You are here").openPopup();
             
-            // Zoom to show both you and the target
-            const group = new L.featureGroup([userMarker, L.marker(targetCoords)]);
+            const group = new L.featureGroup([userMarker, L.circleMarker(targetCoords)]);
             map.fitBounds(group.getBounds().pad(0.5));
         }, () => {
-            alert("Could not get your location. Please check your GPS settings.");
+            alert("Turn on GPS/Location permissions!");
         });
     }
 
