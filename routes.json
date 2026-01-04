@@ -38,12 +38,9 @@
     "LTO Ecoland Station": [7.050824, 125.587704],
     "Gaisano Capital Station": [7.08059, 125.512963],
     "Vista Mall Station": [7.085745, 125.508393],
-    "Gulf View Station": [7.046206, 125.534704],
-    "Jollibee Puan Station": [7.051554, 125.542387],
-    "Coke Ulas Station": [7.053568, 125.544283],
-    "Apo Golf Station": [7.045904, 125.534033],
-    "Shell Bago Aplaya Station": [7.042361, 125.528801],
-    "Mercury Puan Station": [7.052315, 125.542941]
+    "San Pedro Street Station": [7.065678, 125.607742],
+    "Grand Menseng Hotel Station": [7.064504, 125.606851],
+    "Pichon Street corner Quirino Avenue Station": [7.067860, 125.603117]
   },
   "all_routes": [
     {
@@ -52,14 +49,7 @@
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#430dac",
-      "path": [
-        "Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station",
-        "Bago Aplaya Crossing Station", "Gulf View Station", "Jollibee Puan Station",
-        "Coke Ulas Station", "Ateneo Senior High Station", "SPED Bangkal Station",
-        "Tahimik Avenue Matina Station", "Matina Crossing Station", "Kawayan Drive Station",
-        "DGT Station", "Water District Matina Station", "NCCC Maa Station",
-        "Ateneo Matina Station", "GE Torres Station"
-      ]
+      "path": ["Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station", "Bago Aplaya Crossing Station", "Ateneo Senior High Station", "SPED Bangkal Station", "Tahimik Avenue Matina Station", "Matina Crossing Station", "Kawayan Drive Station", "DGT Station", "Water District Matina Station", "NCCC Maa Station", "Ateneo Matina Station", "GE Torres Station"]
     },
     {
       "id": "R102-PM",
@@ -67,14 +57,7 @@
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#430dac",
-      "path": [
-        "Ecoland Terminal Station", "GE Torres Station", "UM Matina Station",
-        "Alorica Davao Station", "Shrine Hills Matina Station", "Kawayan Drive Station",
-        "Matina Crossing Station", "Tahimik Avenue Matina Station", "SPED Bangkal Station",
-        "Shell Bangkal Station", "Coke Ulas Station", "Mercury Puan Station",
-        "Apo Golf Station", "Shell Bago Aplaya Station", "IWHA Station",
-        "GTH Station", "Toril District Hall Station"
-      ]
+      "path": ["Ecoland Terminal Station", "GE Torres Station", "UM Matina Station", "Alorica Davao Station", "Shrine Hills Matina Station", "Kawayan Drive Station", "Matina Crossing Station", "Tahimik Avenue Matina Station", "SPED Bangkal Station", "Shell Bangkal Station", "Coke Ulas Station", "IWHA Station", "Toril District Hall Station"]
     },
     {
       "id": "R103-AM",
@@ -82,12 +65,7 @@
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#ff8300",
-      "path": [
-        "Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station",
-        "Bago Aplaya Crossing Station", "Coastal Road Times Beach Station",
-        "Ecoland Terminal Station", "Felcris Centrale Station",
-        "Davao City Police Office Station", "CM Recto Avenue Station", "Red Cross Roxas Station"
-      ]
+      "path": ["Toril District Hall Station", "Fusion GTH Station", "Pepsi Dumoy Station", "Bago Aplaya Crossing Station", "Coastal Road Times Beach Station", "Ecoland Terminal Station", "Felcris Centrale Station", "Davao City Police Office Station", "CM Recto Avenue Station", "Red Cross Roxas Station"]
     },
     {
       "id": "R103-PM",
@@ -95,12 +73,7 @@
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#ff8300",
-      "path": [
-        "Davao Light (C. Bangoy Street) Station", "A. Bonifacio Street",
-        "Felcris Centrale Station", "Yellow Fin Quimpo Station",
-        "Coastal Road Times Beach Station", "Bago Aplaya Crossing Station",
-        "Pepsi Dumoy Station", "IWHA Station", "GTH Station", "Toril District Hall Station"
-      ]
+      "path": ["Davao Light (C. Bangoy Street) Station", "A. Bonifacio Street", "Felcris Centrale Station", "Yellow Fin Quimpo Station", "Coastal Road Times Beach Station", "Bago Aplaya Crossing Station", "Toril District Hall Station"]
     },
     {
       "id": "R402-AM",
@@ -108,29 +81,31 @@
       "am": "06:00 - 10:00",
       "pm": "--",
       "color": "#266ce4",
-      "path": [
-        "Mintal Palengke Station", "Sto. Nino Mintal Station", "Green Meadows Station",
-        "Catalunan Pequeno Station", "Wellspring Village Station", "Ateneo Senior High Station",
-        "SPED Bangkal Station", "Tahimik Avenue Matina Station", "Matina Crossing Station",
-        "Kawayan Drive Station", "DGT Station", "Water District Matina Station",
-        "NCCC Maa Station", "Ateneo Matina Station", "GE Torres Station"
-      ]
+      "path": ["Mintal Palengke Station", "Sto. Nino Mintal Station", "Green Meadows Station", "Catalunan Pequeno Station", "Wellspring Village Station", "GE Torres Station"]
     },
     {
       "id": "R402-PM",
-      "name": "GE Torres to Mintal (PM)",
+      "name": "Mintal to GE Torres (PM)",
       "am": "--",
       "pm": "16:00 - 21:00",
       "color": "#266ce4",
-      "path": [
-        "GE Torres Station", "UM Matina Station", "Alorica Davao Station",
-        "Shrine Hills Matina Station", "Kawayan Drive Station", "Matina Crossing Station",
-        "Tahimik Avenue Matina Station", "SPED Bangkal Station", "Shell Bangkal Station",
-        "Coke Ulas Station", "Mercury Puan Station", "PWC Quimpo Station",
-        "LTO Ecoland Station", "Wellspring Village Station", "Catalunan Pequeno Station",
-        "Gaisano Capital Station", "Vista Mall Station", "Sto. Nino Mintal Station",
-        "Mintal Palengke Station"
-      ]
+      "path": ["GE Torres Station", "UM Matina Station", "Alorica Davao Station", "SM Ecoland Station", "Sto. Nino Mintal Station", "Mintal Palengke Station"]
+    },
+    {
+      "id": "R403-AM",
+      "name": "Mintal to Roxas (AM)",
+      "am": "06:00 - 10:00",
+      "pm": "--",
+      "color": "#0d7f1b",
+      "path": ["Mintal Palengke Station", "Sto. Nino Mintal Station", "Green Meadows Station", "Catalunan Pequeno Station", "Wellspring Village Station", "UM Matina Station", "Alorica Davao Station", "Grand Menseng Hotel Station", "San Pedro Street Station", "Davao Light (C. Bangoy Street) Station"]
+    },
+    {
+      "id": "R403-PM",
+      "name": "Mintal to Roxas (PM)",
+      "am": "--",
+      "pm": "16:00 - 21:00",
+      "color": "#0d7f1b",
+      "path": ["Davao Light (C. Bangoy Street) Station", "San Pedro Street Station", "Pichon Street corner Quirino Avenue Station", "UM Matina Station", "Wellspring Village Station", "Sto. Nino Mintal Station", "Mintal Palengke Station"]
     }
   ]
 }
