@@ -11,7 +11,7 @@ body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-
 }
 
 .privacy-note { 
-    font-size: 10px; color: #888; text-align: center; padding: 10px 0; border-top: 1px solid #eee; margin-top: auto; /* Pushes it to the very bottom of the flex container */ flex-shrink: 0;
+    font-size: 10px; color: #888; text-align: center; padding: 10px 5px; border-top: 1px solid #eee; background: #fff; flex-shrink: 0; width: 100%;
 }
 
 /* Status Cards */
@@ -26,7 +26,7 @@ body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Route List */
-#route-list { flex-grow: 1; overflow-y: auto; padding-right: 5px; -webkit-overflow-scrolling: touch; }
+#route-list { flex-grow: 1; overflow-y: auto; padding-right: 5px; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
 
 /* Group & Header Styles */
 .route-group-box { margin-bottom: 15px; }
