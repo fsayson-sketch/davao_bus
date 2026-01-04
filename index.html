@@ -6,13 +6,13 @@
     <title>Bus Tracker - DB NearMe</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        /* Prevents the whole page from scrolling, only the list should scroll */
+        /* Mobile-First CSS: Prevents page bounce and keeps button visible */
         body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', sans-serif; background: #f0f2f5; overflow: hidden; }
         
         /* Map takes up 50% of the screen */
         #map { height: 50vh; width: 100%; z-index: 1; }
 
-        /* UI Container takes up the other 50% and stays inside the screen */
+        /* UI Container takes up the bottom 50% */
         .ui-container { 
             height: 50vh; 
             padding: 15px; 
@@ -34,16 +34,16 @@
             padding: 10px; 
             border-radius: 8px; 
             margin-bottom: 10px;
-            flex-shrink: 0; /* Prevents this from squishing */
+            flex-shrink: 0; 
         }
 
-        /* The Scrollable List Area */
+        /* Scrollable List Area - Takes available space */
         #route-list {
-            flex: 1; /* This takes up all available space between the card and button */
+            flex: 1; 
             overflow-y: auto;
             margin-bottom: 10px;
             padding-right: 5px;
-            -webkit-overflow-scrolling: touch; /* Smooth scroll for iPhones */
+            -webkit-overflow-scrolling: touch; 
         }
 
         .route-card {
@@ -61,7 +61,7 @@
         .schedule-box { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #555; }
         .time-badge { background: #f8f9fa; padding: 4px 8px; border-radius: 6px; border: 1px solid #eee; }
 
-        /* Locate Button - Fixed at the bottom of the container */
+        /* Fixed Locate Button */
         .btn-locate { 
             background: #28a745; 
             color: white; 
@@ -72,7 +72,7 @@
             font-size: 16px;
             cursor: pointer;
             width: 100%;
-            flex-shrink: 0; /* Ensures button is always visible */
+            flex-shrink: 0; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .btn-locate:active { background: #218838; transform: scale(0.98); }
@@ -89,21 +89,24 @@
     </div>
 
     <div id="route-list">
-        </div>
+        <p style="text-align:center; color:#999;">Loading routes...</p>
+    </div>
 
     <button class="btn-locate" onclick="findMe()">📍 Get My Location</button>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+    // 1. Initialize Map
     const map = L.map('map', { zoomControl: false }).setView([7.0650, 125.5700], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
     let currentPathLine = null;
-    let currentMarkers = [];
+    let currentRouteMarkers = [];
     let userMarker = null;
     let targetCoords = null;
 
+    // 2. Fetch Data and Create UI Cards
     async function loadRoutes() {
         try {
             const response = await fetch('routes.json');
@@ -129,32 +132,51 @@
         }
     }
 
+    // 3. Draw Route Function (with Start/End logic)
     function drawRoute(routeId) {
         const route = window.busData.all_routes.find(r => r.id === routeId);
         const coords = route.path.map(name => window.busData.stations[name]);
-        targetCoords = coords[0]; 
+        targetCoords = coords[0]; // Set target for geolocation distance
 
         document.getElementById('bus-id').innerHTML = `<b>Selected:</b> ${route.id}`;
-        document.getElementById('nearest-info').innerText = `Distance to ${route.path[0]}`;
+        document.getElementById('nearest-info').innerText = `Measuring to: ${route.path[0]}`;
 
+        // Clear existing map layers
         if (currentPathLine) map.removeLayer(currentPathLine);
-        currentMarkers.forEach(m => map.removeLayer(m));
-        currentMarkers = [];
+        currentRouteMarkers.forEach(m => map.removeLayer(m));
+        currentRouteMarkers = [];
 
-        currentPathLine = L.polyline(coords, {color: '#007bff', weight: 6}).addTo(map);
+        // Draw new Route Line
+        currentPathLine = L.polyline(coords, {color: '#007bff', weight: 6, opacity: 0.8}).addTo(map);
         
-        route.path.forEach(name => {
+        // Add markers for all stations
+        route.path.forEach((name, index) => {
+            let markerColor = '#007bff'; // Blue for stops
+            let radius = 5;
+
+            if (index === 0) {
+                markerColor = '#28a745'; // Green for Start
+                radius = 8;
+            } else if (index === route.path.length - 1) {
+                markerColor = '#dc3545'; // Red for End
+                radius = 8;
+            }
+
             const m = L.circleMarker(window.busData.stations[name], {
-                radius: 6, color: '#007bff', fillColor: 'white', fillOpacity: 1
+                radius: radius,
+                color: markerColor,
+                fillColor: 'white',
+                fillOpacity: 1
             }).addTo(map).bindTooltip(name);
-            currentMarkers.push(m);
+            currentRouteMarkers.push(m);
         });
 
-        map.fitBounds(currentPathLine.getBounds(), {padding: [30, 30]});
+        map.fitBounds(currentPathLine.getBounds(), {padding: [40, 40]});
     }
 
+    // 4. Geolocation and Distance Logic
     function getDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371;
+        const R = 6371; // km
         const dLat = (lat2-lat1) * Math.PI / 180;
         const dLon = (lon2-lon1) * Math.PI / 180;
         const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -163,8 +185,8 @@
     }
 
     function findMe() {
-        if (!targetCoords) { alert("Select a route first!"); return; }
-        if (!navigator.geolocation) { alert("GPS not supported"); return; }
+        if (!targetCoords) { alert("Please select a route first!"); return; }
+        if (!navigator.geolocation) { alert("GPS not supported by browser"); return; }
 
         navigator.geolocation.getCurrentPosition(pos => {
             const uLat = pos.coords.latitude;
@@ -176,13 +198,15 @@
             if (userMarker) map.removeLayer(userMarker);
             userMarker = L.marker([uLat, uLng]).addTo(map).bindPopup("You are here").openPopup();
             
+            // Zoom to show both you and the target station
             const group = new L.featureGroup([userMarker, L.circleMarker(targetCoords)]);
             map.fitBounds(group.getBounds().pad(0.5));
         }, () => {
-            alert("Turn on GPS/Location permissions!");
+            alert("Please enable GPS permissions to use this feature.");
         });
     }
 
+    // Start loading
     loadRoutes();
 </script>
 </body>
